@@ -2,6 +2,9 @@
 
 import random
 import unittest
+import matplotlib.pyplot as plt
+import networkx as nx
+from collections import defaultdict
 
 class Train:
     '''
@@ -318,7 +321,68 @@ class RailNetwork:
                     matching_lines.append(line)
 
         return random.choice(matching_lines)
+
     
+    def generate_train_map(self, connections_file):
+        # Mock Train objects for testing.
+        trains = [
+            Train("A", "B", "blue", 1, False),
+            Train("B", "C", "blue", 2, True),
+            Train("C", "D", "blue", 3, False),
+            Train("X", "Y", "green", 4, True),
+            Train("Y", "C", "green", 5, False),
+            Train("C", "Z", "green", 6, False)
+        ]
+
+        # Reads the connections file.
+        with open(connections_file, 'r') as f:
+            connections = f.readlines()
+
+        # Creates the graph.
+        G = nx.MultiDiGraph()
+
+        for line in connections:
+            source, target, line_name, direction = line.strip().split(',')
+            G.add_edge(source, target, line=line_name, direction=direction)
+
+        # Sets the positions of the nodes using the Fruchterman-Reingold algorithm.
+        position = nx.spring_layout(G, k=1, seed=42)
+
+        # Draws the nodes.
+        nx.draw_networkx_nodes(G, position, node_size=300, node_color="w")
+
+        # Draws the edges.
+        edge_colors = []
+        for _, _, attrs in G.edges(data=True):
+            if "line" in attrs:
+                edge_colors.append(attrs["line"])
+            else:
+                edge_colors.append("black") # Makes black the default color of the lines if the station's name isn't a color.
+        nx.draw_networkx_edges(G, position, edge_color=edge_colors, width=2, arrowsize=20, arrowstyle='-')
+
+        # Adds labels to the nodes.
+        nx.draw_networkx_labels(G, position, font_size=10, font_family="sans-serif")
+
+        # Gets the trains on each station.
+        station_trains = defaultdict(list)
+        for train in trains:
+            station_trains[train.station].append(train)
+
+        # Adds the trains' IDs to the map.
+        for station, trains in station_trains.items():
+            train_labels = [train.train_id for train in trains]
+            x, y = position[station]
+            plt.text(x, y - 0.03, "\n".join(str(train_label) for train_label in train_labels), fontsize=8, ha="center", va="center", bbox=dict(facecolor="white", edgecolor="none", alpha=0.7))
+
+        # Sets the axis limits and removes them.
+        plt.axis("off")
+        plt.xlim(-1.2, 1.2)
+        plt.ylim(-1.2, 1.2)
+        plt.title("Rail Network Map")
+
+        # Shows the plot.
+        plt.show()
+
 
     def simulate(self):
         '''
@@ -334,13 +398,13 @@ class RailNetwork:
         within the given time frame.
 
         '''
-        input_prompt = "Continue simulation [1], train info [2], route info [3], exit [q].\nSelect an option: "
+        input_prompt = "Continue simulation [1], train info [2], route info [3], show rail network map [4], exit [q].\nSelect an option: "
         # Main simulation loop.
         while True:
             # Makes input case insensitive, and allows spaces and dots, for less strict inputs.
             choice = input(input_prompt).lower().replace(" ","").replace(".","")
             # Input checkpoint
-            while not choice == "1" and choice != "2" and not choice == "3" and choice != "q":
+            while not choice == "1" and choice != "2" and not choice == "3" and choice != "4" and not choice == "q":
                 print("\nInvalid input.\n")
                 choice = input(input_prompt).lower().replace(" ","").replace(".","") # New input if invalid
             if choice == "1": # Continue simulation [1]
@@ -378,6 +442,11 @@ class RailNetwork:
                     print(f"\nStation {end_station_for_info} is reachable from station {start_station_for_info} within {timesteps_for_info} timesteps.\n")
                 if self.station_reachability_checker(start_station_for_info, end_station_for_info, timesteps_for_info, connections) == False:
                     print(f"\nStation {end_station_for_info} is not reachable from station {start_station_for_info} within {timesteps_for_info} timesteps.\n")
+            elif choice == "4":
+                print(f"Stations: {self.stations}")
+                print(f"Lines: {self.lines}")
+                print(f"Trains: {self.trains}")
+                self.generate_train_map(connections_file)
             elif choice == "q": # Exits the program [q]
                 print("Thank you and goodbye!")
                 break
@@ -546,9 +615,9 @@ def connections_file_check(filename):
 if  __name__ == "__main__":
     network = RailNetwork()
     # (Dev feature) Uncomment the 2 below/comment the other 2 file inputs to skip file names inputs.
-    #stations_file = ("stations.txt")
-    #connections_file = ("connections.txt")
-    stations_file = (input("Enter name of stations file: "))
+    stations_file = ("stations.txt")
+    connections_file = ("connections.txt")
+    #stations_file = (input("Enter name of stations file: "))
     # Valid file checkpoint for the stations file.
     while not file_existance_checker(stations_file) or not stations_file_check(stations_file):
         if not file_existance_checker(stations_file): # Checks if the station file exists.
@@ -559,7 +628,7 @@ if  __name__ == "__main__":
             print("This file cannot be interpreted.")
             stations_file = input("Enter name of stations file: ")
             continue
-    connections_file = (input("Enter name of connections file: "))
+    #connections_file = (input("Enter name of connections file: "))
     # Valid file checkpoint for the connections file.
     while not file_existance_checker(connections_file) or not connections_file_check(connections_file):
         if not file_existance_checker(connections_file): # Checks if the connections file exists.
