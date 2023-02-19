@@ -324,6 +324,16 @@ class RailNetwork:
 
     
     def generate_train_map(self, connections_file):
+        '''
+        Function for creating a map of rail network by plotting the trains, stations and lines.
+
+        Parameters: A connections file.
+        
+        Output: Displays a map of the rail network.
+
+        Warning: Needs matplotlib.pyplot, networkx modules and the defaultdict to work.
+
+        '''
         # Collects all the Train ojects in a list.
         all_trains = [train_obj for train_obj in self.trains.values()]
 
@@ -610,9 +620,9 @@ def connections_file_check(filename):
 if  __name__ == "__main__":
     network = RailNetwork()
     # (Dev feature) Uncomment the 2 below/comment the other 2 file inputs to skip file names inputs.
-    stations_file = ("stations.txt")
-    connections_file = ("connections.txt")
-    #stations_file = (input("Enter name of stations file: "))
+    #stations_file = ("stations.txt")
+    #connections_file = ("connections.txt")
+    stations_file = (input("Enter name of stations file: "))
     # Valid file checkpoint for the stations file.
     while not file_existance_checker(stations_file) or not stations_file_check(stations_file):
         if not file_existance_checker(stations_file): # Checks if the station file exists.
@@ -623,7 +633,7 @@ if  __name__ == "__main__":
             print("This file cannot be interpreted.")
             stations_file = input("Enter name of stations file: ")
             continue
-    #connections_file = (input("Enter name of connections file: "))
+    connections_file = (input("Enter name of connections file: "))
     # Valid file checkpoint for the connections file.
     while not file_existance_checker(connections_file) or not connections_file_check(connections_file):
         if not file_existance_checker(connections_file): # Checks if the connections file exists.
