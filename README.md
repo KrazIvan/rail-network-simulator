@@ -20,7 +20,7 @@ specific station on the rail network from another station, in a given time frame
 also generate a map of the entire rail network, which will show you all of the stations, lines
 and the trains.
 
-You can quit the simulation at any moment at this point by inputting “q”, which will quit the simulation 
+You can quit the simulation at any moment at this point by inputting “*q*”, which will quit the simulation 
 and run some unit tests.
 
 ## Which libraries/modules are used and how these are downloaded and installed if they are not part of Python’s standard distribution ##
@@ -41,12 +41,12 @@ The program gets the station names and their respective risks of delaying a
 train from the stations file, and the program gets the information on how stations are 
 connected and which line/lines they belong to from the connections file. It also gets the 
 number of trains to simulate from the user. The program separates this information into 
-variables which it then uses to create the Train, Station, Line and RailNetwork classes and 
+variables which it then uses to create the *Train*, *Station*, *Line* and *RailNetwork* classes and 
 their attributes, these classes in turn have their own function/methods and perform different 
 tasks in the simulation, such are moving trains to different stations, delaying trains, etc. 
 Similarly to their real-life counterparts.
 
-The RailNetwork class is the “main” class of the 
+The *RailNetwork* class is the “main” class of the 
 simulation though, as it is the one performing the simulation by using the Train, Station and 
 Line objects.
 
