@@ -18,7 +18,7 @@ trains by their ID numbers and what stations and lines they are on and if they g
 You can also check the route information, which will tell you if it’s possible to reach a 
 specific station on the rail network from another station, in a given time frame. The can
 also generate a map of the entire rail network, which will show you all of the stations, lines
-and the trains.\
+and the trains.
 
 You can quit the simulation at any moment at this point by inputting “q”, which will quit the simulation 
 and run some unit tests.
