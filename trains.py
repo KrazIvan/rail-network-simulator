@@ -258,8 +258,8 @@ class RailNetwork:
 
         Parameter: A connections file name as a string.
         '''
-        with open(file_name, 'r') as f:
-            return [tuple(line.strip().split(',')) for line in f]
+        with open(file_name, "r") as f:
+            return [tuple(line.strip().split(",")) for line in f]
     
 
     def station_reachability_checker(self, start, target, time_limit, connections):
@@ -324,18 +324,11 @@ class RailNetwork:
 
     
     def generate_train_map(self, connections_file):
-        # Mock Train objects for testing.
-        trains = [
-            Train("A", "B", "blue", 1, False),
-            Train("B", "C", "blue", 2, True),
-            Train("C", "D", "blue", 3, False),
-            Train("X", "Y", "green", 4, True),
-            Train("Y", "C", "green", 5, False),
-            Train("C", "Z", "green", 6, False)
-        ]
+        # Collects all the Train ojects in a list.
+        all_trains = [train_obj for train_obj in self.trains.values()]
 
         # Reads the connections file.
-        with open(connections_file, 'r') as f:
+        with open(connections_file, "r") as f:
             connections = f.readlines()
 
         # Creates the graph.
@@ -346,7 +339,7 @@ class RailNetwork:
             G.add_edge(source, target, line=line_name, direction=direction)
 
         # Sets the positions of the nodes using the Fruchterman-Reingold algorithm.
-        position = nx.spring_layout(G, k=1, seed=42)
+        position = nx.spring_layout(G, k=1, seed=666)
 
         # Draws the nodes.
         nx.draw_networkx_nodes(G, position, node_size=300, node_color="w")
@@ -358,20 +351,20 @@ class RailNetwork:
                 edge_colors.append(attrs["line"])
             else:
                 edge_colors.append("black") # Makes black the default color of the lines if the station's name isn't a color.
-        nx.draw_networkx_edges(G, position, edge_color=edge_colors, width=2, arrowsize=20, arrowstyle='-')
+        nx.draw_networkx_edges(G, position, edge_color=edge_colors, width=2, arrowsize=20, arrowstyle="-")
 
         # Adds labels to the nodes.
         nx.draw_networkx_labels(G, position, font_size=10, font_family="sans-serif")
 
         # Gets the trains on each station.
         station_trains = defaultdict(list)
-        for train in trains:
+        for train in all_trains:
             station_trains[train.station].append(train)
 
         # Adds the trains' IDs to the map.
-        for station, trains in station_trains.items():
-            train_labels = [train.train_id for train in trains]
-            x, y = position[station]
+        for station, all_trains in station_trains.items():
+            train_labels = [train.train_id for train in all_trains]
+            x, y = position[station.name]
             plt.text(x, y - 0.03, "\n".join(str(train_label) for train_label in train_labels), fontsize=8, ha="center", va="center", bbox=dict(facecolor="white", edgecolor="none", alpha=0.7))
 
         # Sets the axis limits and removes them.
@@ -396,6 +389,8 @@ class RailNetwork:
 
         Route info [3]: Determines if it's possible to reach a station from another station 
         within the given time frame.
+
+        Show rail network map [4]: Shows a map of the entire network, along with all the trains and what station they're on.
 
         '''
         input_prompt = "Continue simulation [1], train info [2], route info [3], show rail network map [4], exit [q].\nSelect an option: "
@@ -443,9 +438,9 @@ class RailNetwork:
                 if self.station_reachability_checker(start_station_for_info, end_station_for_info, timesteps_for_info, connections) == False:
                     print(f"\nStation {end_station_for_info} is not reachable from station {start_station_for_info} within {timesteps_for_info} timesteps.\n")
             elif choice == "4":
-                print(f"Stations: {self.stations}")
-                print(f"Lines: {self.lines}")
-                print(f"Trains: {self.trains}")
+                #print(f"Stations: {self.stations}")
+                #print(f"Lines: {self.lines}")
+                #print(f"Trains: {self.trains}")
                 self.generate_train_map(connections_file)
             elif choice == "q": # Exits the program [q]
                 print("Thank you and goodbye!")
@@ -514,7 +509,7 @@ def file_existance_checker(filename):
 
     '''
     try: 
-        with open(filename, 'r') as test:
+        with open(filename, "r") as test:
             return True
     except FileNotFoundError:
         return False
