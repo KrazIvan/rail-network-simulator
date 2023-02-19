@@ -29,7 +29,7 @@ The original *trains.py* (*originaltrains.py*) doesn’t use any libraries/modul
 downloaded. The program uses the built-in random module (to create randomness) and the 
 unittest module (to do unit tests). Both are part of Python’s standard distribution.
 
-However the new *trains.py* (which can generate rail network maps) requires the *matplotlib* and *networkx* modules. 
+However the new *trains.py* (which can generate rail network maps) requires the *Matplotlib* and *NetworkX* libraries. 
 You'll need to install these libraries as they aren't part of Python’s standard distribution.
 The new *trains.py* also uses the *defaultdict* from *collections*, but *collections* is part of Python’s standard distribution.
 
