@@ -10,21 +10,27 @@ provided in the same folder as the program. It’s possible to skip the file inp
 tedious by uncommenting two lines of commented code above them and simply writing the 
 name of your files there. After inputting the file names, you will 
 have to input the number of trains you want to simulate (note that you must have at least one 
-train).
+train).\
 
 After inputting the files and the number of trains you want. You’ll be taken to an 
 options menu, where you can advance time forward in the simulation, see the positions of 
 trains by their ID numbers and what stations and lines they are on and if they got delayed. 
 You can also check the route information, which will tell you if it’s possible to reach a 
-specific station on the rail network from another station, in a given time frame. You can quit 
-the simulation at any moment at this point by inputting “q”, which will quit the simulation 
+specific station on the rail network from another station, in a given time frame. The can
+also generate a map of the entire rail network, which will show you all of the stations, lines
+and the trains.\
+You can quit the simulation at any moment at this point by inputting “q”, which will quit the simulation 
 and run some unit tests.
 
 ## Which libraries/modules are used and how these are downloaded and installed if they are not part of Python’s standard distribution ##
 
-The program doesn’t use any libraries/modules that need to be manually installed or 
+The original *trains.py* (*originaltrains.py*) doesn’t use any libraries/modules that need to be manually installed or 
 downloaded. The program uses the built-in random module (to create randomness) and the 
-unittest module (to do unit tests). Both are part of Python’s standard distribution
+unittest module (to do unit tests). Both are part of Python’s standard distribution.\
+
+However the new *trains.py* (which can generate rail network maps) requires the *matplotlib* and *networkx* modules. 
+You'll need to install these libraries as they aren't part of Python’s standard distribution.
+The new *trains.py* also uses the *defaultdict* from *collections*, but *collections* is part of Python’s standard distribution.
 
 ## A description of how the program is structured (which files contain what, etc.) ##
 
@@ -52,6 +58,8 @@ an error or invalid input message. Every function/class also features a docstrin
 comments which explains how they are supposed to work.
 
 ## Which algorithms are used and why ##
-The station_reachability_checker() function makes use of a breadth-first search algorithm in 
+The *station_reachability_checker()* function makes use of a breadth-first search algorithm in 
 order to implement a route info option in that program that will determine if 
-it’s possible to reach a target station within a given amount of time steps.
+it’s possible to reach a target station within a given amount of time steps.\
+
+When generating the map, the placement of the stations is set using the Fruchterman-Reingold force-directed algorithm.
