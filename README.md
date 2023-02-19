@@ -1,7 +1,8 @@
 # rail-network-simulator #
 
 The program is an interactive rail network simulator that features options to advance time, see 
-information on trains and get route information. The program also simulates train delays.
+information on trains, get route information, and generate maps of the entire current network.
+The program also simulates train delays.
 
 ## How the program is started and used. ##
 You start the program by simply running it, you will be prompted to input the name of a 
