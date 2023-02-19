@@ -63,7 +63,7 @@ comments which explains how they are supposed to work.
 
 ## Which algorithms are used and why ##
 The *station_reachability_checker()* function makes use of a breadth-first search algorithm in 
-order to implement a route info option in that program that will determine if 
+order to implement a route info option in the program that will determine if 
 it’s possible to reach a target station within a given amount of time steps.
 
 When generating the map, the placement of the stations is set using the Fruchterman-Reingold force-directed algorithm.
