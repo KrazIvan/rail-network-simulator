@@ -619,7 +619,7 @@ def connections_file_check(filename):
 # The program initiates here.
 if  __name__ == "__main__":
     network = RailNetwork()
-    # (Dev feature) Uncomment the 2 below/comment the other 2 file inputs to skip file names inputs.
+    # (Dev feature) Uncomment the 2 below/comment the other 2 file inputs to skip file names inputs. Note that this would mean that the files won't be checked for errors.
     #stations_file = ("stations.txt")
     #connections_file = ("connections.txt")
     stations_file = (input("Enter name of stations file: "))
