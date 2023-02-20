@@ -1,7 +1,5 @@
 # rail-network-simulator #
 
-![Rail network map](RailNetworkMap1.PNG)
-
 This program is an interactive rail network simulator that features options to advance time, see 
 information on trains, get route information, and generate maps of the entire current network.
 The program also simulates train delays.
