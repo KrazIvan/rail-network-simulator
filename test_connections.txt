@@ -1,0 +1,3 @@
+A,B,red,N
+B,C,red,E
+C,D,red,S
