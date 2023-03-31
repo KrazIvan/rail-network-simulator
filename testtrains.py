@@ -1,5 +1,5 @@
-import trains
-
+import trains as t
+import unittest
 
 class TestRailNetwork(unittest.TestCase):
     def test_load_stations(self):
@@ -7,6 +7,7 @@ class TestRailNetwork(unittest.TestCase):
         Function that tests load_stations().
         
         '''
+        network = t.RailNetwork()
         file_name = "test_stations.txt"
         with open(file_name, "w") as f:
             f.write("Hej,0.666\nPå,0.9\nDig,0.05\n")
@@ -26,6 +27,7 @@ class TestRailNetwork(unittest.TestCase):
         Function that tests load_connections().
         
         '''
+        network = t.RailNetwork()
         file_name = "test_connections.txt"
         with open(file_name, "w") as test:
             test.write("A,B,red,N\nB,C,red,E\nC,D,red,S\n")
@@ -47,12 +49,13 @@ class TestRailNetwork(unittest.TestCase):
         Function that tests station_reachability_checker().
         
         '''
+        network = t.RailNetwork()
         test_connections = [('A', 'B', 'blue', 'S'),
                             ('B', 'C', 'blue', 'S'), 
                             ('C', 'D', 'blue', 'S'), 
                             ('X', 'Y', 'green', 'S'), 
                             ('Y', 'C', 'green', 'S'), 
-                            ('C', 'Z', 'green', 'S')] # Connections for Map 1.
+                            ('C', 'Z', 'green', 'S')] # Connections for "Map 1".
         
         # Test with neighboring stations.
         self.assertTrue(network.station_reachability_checker("A", "B", 1, test_connections))
