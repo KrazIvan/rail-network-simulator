@@ -1,7 +1,7 @@
 # rail-network-simulator #
 
 
-&nbsp;&nbsp;&nbsp;<img src="https://github.com/KrazIvan/rail-network-simulator/blob/main/Some%20generated%20maps/RailNetworkMap6.PNG" alt= "A generated map of a rail network from this program.">
+<img src="https://github.com/KrazIvan/rail-network-simulator/blob/main/Some%20generated%20maps/RailNetworkMap6.PNG" alt= "A generated map of a rail network from this program." width="850" height="500">
 
 This program is an interactive rail network simulator that features options to advance time, see 
 information on trains, get route information, and generate maps of the entire current network.
