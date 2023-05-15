@@ -39,6 +39,8 @@ However the new *trains.py* (which can generate rail network maps) requires the 
 You'll need to install these libraries as they aren't part of Python’s standard distribution.
 The new *trains.py* also uses the *defaultdict* from *collections*, but *collections* is part of Python’s standard distribution.
 
+*testtrains.py* is used for unittesting *trains.py*, you'll need to have both of these files.
+
 ## A description of how the program is structured (which files contain what, etc.) ##
 
 The program starts by getting the information it needs from the stations file and the 
