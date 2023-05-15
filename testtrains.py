@@ -28,10 +28,14 @@ class TestRailNetwork(unittest.TestCase):
         
         '''
         network = t.RailNetwork()
-        file_name = "test_connections.txt"
-        with open(file_name, "w") as test:
+        stations_file = "test_stations2.txt"
+        with open(stations_file, "w") as f:
+            f.write("A,0.666\nB,0.187\nC,0.05\nD,0.69\n")
+        network.load_stations(stations_file)
+        connections_name = "test_connections.txt"
+        with open(connections_name, "w") as test:
             test.write("A,B,red,N\nB,C,red,E\nC,D,red,S\n")
-        network.load_connections(file_name)
+        network.load_connections(connections_name)
         # Checks that the stations are on the red line.
         self.assertIn("A", network.lines["red"].stations)
         self.assertIn("B", network.lines["red"].stations)
